@@ -1,7 +1,7 @@
 {
   stdenvNoCC,
-  gcc-686,
-  binutils-686,
+  i386-elf-gcc,
+  i386-elf-binutils,
   grub2,
   libisoburn,
 }:
@@ -11,11 +11,11 @@ stdenvNoCC.mkDerivation {
 
  src = ./..;
 
- env.CC = "i686-elf-gcc";
+ env.CC = "i386-elf-gcc";
 
  nativeBuildInputs = [
-   gcc-686
-   binutils-686
+   i386-elf-gcc
+   i386-elf-binutils
    grub2
    libisoburn
  ];

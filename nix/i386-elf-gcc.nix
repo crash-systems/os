@@ -5,11 +5,11 @@
   libmpc,
   fetchzip,
   lib,
-  binutils-686,
+  i386-elf-binutils,
   ...
 }:
 stdenv.mkDerivation (finalAttrs: {
-  pname = "gcc";
+  pname = "i386-elf-gcc";
   version = "10.2.0";
 
   src = fetchzip {
@@ -25,7 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
   configureScript = "../configure";
 
   configureFlags = [
-    "--target=i686-elf"
+    "--target=i386-elf"
     "--prefix=${placeholder "out"}"
     "--enable-languages=c"
     "--disable-bootstrap"
@@ -48,14 +48,14 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-threads"
     "--without-headers"
     "--with-newlib"
-    "--with-as=${lib.getExe' binutils-686 "i686-elf-as"}"
-    "--with-ld=${lib.getExe' binutils-686 "i686-elf-ld"}"
+    "--with-as=${lib.getExe' i386-elf-binutils "i386-elf-as"}"
+    "--with-ld=${lib.getExe' i386-elf-binutils "i386-elf-ld"}"
   ];
 
   enableParallelBuilding = true;
   hardeningDisable = ["all"];
 
-  buildInputs = [ binutils-686 ];
+  buildInputs = [ i386-elf-binutils ];
 
   nativeBuildInputs = [
     gmp
@@ -77,6 +77,6 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "GNU Compiler Collection";
     license = lib.licenses.gpl3Plus;
-    mainProgram = "i686-elf-gcc";
+    mainProgram = "i386-elf-gcc";
   };
 })

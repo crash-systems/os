@@ -12,8 +12,7 @@
   in {
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        env.CC = "i686-elf-gcc";
-
+        env.CC = pkgs.lib.getExe self.packages.${pkgs.system}.i386-elf-gcc;
         inputsFrom = [ self.packages.${pkgs.system}.os ];
       };
     });
@@ -23,12 +22,12 @@
     packages = forAllSystems (pkgs: let
       pkgs' = self.packages.${pkgs.system};
     in {
-      binutils-686 = pkgs.callPackage ./nix/binutils-2-36.nix pkgs';
+      i386-elf-binutils = pkgs.callPackage ./nix/i386-elf-binutils.nix pkgs';
 
-      gcc-686 = pkgs.callPackage ./nix/gcc-10-2-0.nix pkgs';
+      i386-elf-gcc = pkgs.callPackage ./nix/i386-elf-gcc.nix pkgs';
 
       os = pkgs.callPackage ./nix/os.nix {
-         inherit (pkgs') gcc-686 binutils-686;
+         inherit (pkgs') i386-elf-gcc i386-elf-binutils;
       };
 
       default = (pkgs.writeShellScriptBin "run" ''

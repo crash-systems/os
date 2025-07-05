@@ -1,5 +1,5 @@
-CC := i686-elf-gcc
-AS := i686-elf-as
+AS := i386-elf-as
+LD := i386-elf-ld
 
 CFLAGS := -std=gnu99 -ffreestanding -O2 -nostdlib -Wall -Wextra
 LDFLAGS := -T linker.ld
@@ -35,7 +35,7 @@ $(build)/os.iso: \
 
 $(build)/os.bin: $(build)/boot.o $(build)/kernel.o
 	mkdir -p $(dir $@)
-	$(CC) $(LDFLAGS) -o $@ $(CFLAGS) $^ -lgcc
+	$(LD) $(LDFLAGS) -o $@ $^
 
 $(build)/boot.o: boot.s
 	mkdir -p $(dir $@)

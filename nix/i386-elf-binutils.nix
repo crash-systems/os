@@ -5,7 +5,7 @@
   ...
 }:
 stdenv.mkDerivation (finalAttrs: {
-  pname = "binutils";
+  pname = "i386-elf-binutils";
   version = "2.36";
 
   src = fetchzip {
@@ -14,7 +14,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   configureFlags = [
-    "--target=i686-elf"
+    "--target=i386-elf"
     "--prefix=${placeholder "out"}"
     "--enable-deterministic-archives"
     "--disable-nls"
