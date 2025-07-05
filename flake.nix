@@ -12,7 +12,7 @@
   in {
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        env.CC = pkgs.lib.getExe self.packages.${pkgs.system}.i386-elf-gcc;
+        env.CC = self.packages.${pkgs.system}.i386-elf-gcc.meta.mainProgram;
         inputsFrom = [ self.packages.${pkgs.system}.os ];
       };
     });
@@ -26,9 +26,13 @@
 
       i386-elf-gcc = pkgs.callPackage ./nix/i386-elf-gcc.nix pkgs';
 
+      i386-elf-tcc = pkgs.callPackage ./nix/i386-elf-tcc.nix pkgs';
+    } // {
       os = pkgs.callPackage ./nix/os.nix {
-         inherit (pkgs') i386-elf-gcc i386-elf-binutils;
+         inherit (pkgs') i386-elf-gcc i386-elf-binutils i386-elf-tcc;
       };
+
+      os-tcc = pkgs'.os.override { withGCC = false; };
 
       default = (pkgs.writeShellScriptBin "run" ''
         qemu-system-i386 -cdrom ${pkgs'.os}/iso/os.iso

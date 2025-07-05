@@ -1,7 +1,9 @@
+CC ?= i386-elf-gcc
+
 AS := i386-elf-as
 LD := i386-elf-ld
 
-CFLAGS := -std=gnu99 -ffreestanding -O2 -nostdlib -Wall -Wextra
+CFLAGS := -std=c99 -ffreestanding -O2 -nostdlib -Wall -Wextra
 LDFLAGS := -T linker.ld
 
 build = .build

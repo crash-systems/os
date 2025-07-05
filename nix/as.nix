@@ -4,6 +4,7 @@
   lib,
   ...
 }:
+
 stdenvNoCC.mkDerivation {
   pname = "as";
   inherit (binutils) version;

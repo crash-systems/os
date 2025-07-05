@@ -1,11 +1,6 @@
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-
-/* Check if the compiler thinks you are targeting the wrong operating system. */
-#if defined(__linux__)
-#error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
+typedef unsigned long size_t;
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
 
 /* This tutorial will only work for the 32-bit ix86 targets. */
 #if !defined(__i386__)
