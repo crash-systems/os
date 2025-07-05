@@ -29,9 +29,9 @@ $(build)/os.iso: \
 		$(build)/isodir/boot/grub/grub.cfg \
 		$(build)/isodir/boot/os.bin
 	grub-mkrescue -o $@ $(build)/isodir \
-		--compress=xz \
-		--modules="multiboot normal configfile" \
-		--fonts="" --themes=""
+		--install-modules="" \
+		--modules="multiboot" \
+		--fonts="" --themes="" --locales=""
 
 $(build)/os.bin: $(build)/boot.o $(build)/kernel.o
 	mkdir -p $(dir $@)
