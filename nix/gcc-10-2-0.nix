@@ -5,7 +5,7 @@
   libmpc,
   fetchzip,
   lib,
-  binutils,
+  binutils-686,
   ...
 }:
 stdenv.mkDerivation (finalAttrs: {
@@ -48,12 +48,14 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-threads"
     "--without-headers"
     "--with-newlib"
+    "--with-as=${lib.getExe' binutils-686 "i686-elf-as"}"
+    "--with-ld=${lib.getExe' binutils-686 "i686-elf-ld"}"
   ];
 
   enableParallelBuilding = true;
   hardeningDisable = ["all"];
 
-  buildInputs = [ binutils ];
+  buildInputs = [ binutils-686 ];
 
   nativeBuildInputs = [
     gmp

@@ -12,13 +12,9 @@
   in {
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages =
-          (builtins.attrValues self.packages.${pkgs.system})
-          ++ (with pkgs; [
-            qemu
-            grub2
-            libisoburn
-        ]);
+        env.CC = "i686-elf-gcc";
+
+        inputsFrom = [ self.packages.${pkgs.system}.os ];
       };
     });
 
@@ -27,12 +23,17 @@
     packages = forAllSystems (pkgs: let
       pkgs' = self.packages.${pkgs.system};
     in {
-      binutils = pkgs.callPackage ./nix/binutils-2-36.nix pkgs';
+      binutils-686 = pkgs.callPackage ./nix/binutils-2-36.nix pkgs';
 
-      # gcc invoke ar through the environment (AR), but has as hardcorded
-      as = pkgs.callPackage ./nix/as.nix pkgs';
+      gcc-686 = pkgs.callPackage ./nix/gcc-10-2-0.nix pkgs';
 
-      gcc = pkgs.callPackage ./nix/gcc-10-2-0.nix pkgs';
+      os = pkgs.callPackage ./nix/os.nix {
+         inherit (pkgs') gcc-686 binutils-686;
+      };
+
+      default = (pkgs.writeShellScriptBin "run" ''
+        qemu-system-i386 -cdrom ${pkgs'.os}/iso/os.iso
+      '');
     });
   };
 }
