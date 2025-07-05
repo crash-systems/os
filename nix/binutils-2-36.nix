@@ -16,7 +16,16 @@ stdenv.mkDerivation (finalAttrs: {
   configureFlags = [
     "--target=i686-elf"
     "--prefix=${placeholder "out"}"
+    "--enable-deterministic-archives"
     "--disable-nls"
+    "--disable-gold"
+    "--disable-plugins"
+    "--disable-multilib"
+    "--disable-gprofng"
+    "--disable-libquadmath"
+    "--disable-libstdcxx"
+    "--disable-readline"
+    "--disable-sim"
     "--disable-werror"
   ];
 

@@ -27,22 +27,39 @@ stdenv.mkDerivation (finalAttrs: {
   configureFlags = [
     "--target=i686-elf"
     "--prefix=${placeholder "out"}"
-    "--disable-nls"
     "--enable-languages=c"
-    "--without-headers"
-    "--disable-libssp"
-    "--disable-libquadmath"
+    "--disable-bootstrap"
+    "--disable-gcov"
+    "--disable-libatomic"
     "--disable-libcc1"
+    "--disable-libitm"
+    "--disable-libgomp"
+    "--disable-libmudflap"
+    "--disable-libquadmath"
+    "--disable-libmudflap"
+    "--disable-libsanitizer"
+    "--disable-libssp"
+    "--disable-libstdcxx"
+    "--disable-libstdcxx-pch"
+    "--disable-libstdcxx-verbose"
+    "--disable-multilib"
+    "--disable-nls"
+    "--disable-shared"
+    "--disable-threads"
+    "--without-headers"
+    "--with-newlib"
   ];
 
   enableParallelBuilding = true;
   hardeningDisable = ["all"];
 
+  buildInputs = [ binutils ];
+
   nativeBuildInputs = [
     gmp
     mpfr
     libmpc
-    binutils
+    stdenv.cc
   ];
 
   makeFlags = [
